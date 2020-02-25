@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sources.Scripts.Core;
+using Sources.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ namespace Sources.Scripts.MainMenu
         public Button loadGameButton;
         public Button quitButton;
 
+        public PlanetsSpawner planetsSpawner;
+        
         public List<GameObject> objectsToEnable;
         
         private void Awake()
@@ -23,8 +26,16 @@ namespace Sources.Scripts.MainMenu
             quitButton.onClick.AddListener(OnQuitButtonClick);
 
             loadGameButton.interactable = SaveGameManager.Instance.GameSaved;
+
+            SpawnPlanets();
         }
 
+        private void SpawnPlanets()
+        {
+            planetsSpawner.SpawnPlanets(4, 5.5f, 13);
+            planetsSpawner.StartMovingPlanets();
+        }
+        
         private void OnQuitButtonClick()
         {
             Application.Quit();
@@ -32,12 +43,12 @@ namespace Sources.Scripts.MainMenu
 
         private void OnLoadGameButtonClick()
         {
-            throw new NotImplementedException();
+            SceneLoader.Instance.LoadScene("GameScene");
         }
 
         private void OnNewGameButtonClick()
         {
-            throw new NotImplementedException();
+            SceneLoader.Instance.LoadScene("GameScene");
         }
 
         private void OnMainMenuButtonClick()
