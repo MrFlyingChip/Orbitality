@@ -73,9 +73,6 @@ namespace Sources.Scripts.Core
             }
             
             barValue.localScale = new Vector3(currentValuePercent, 1, 1);
-            
-            float x = 0.5f - currentValuePercent + currentValuePercent / 2;
-            barValue.localPosition = new Vector3(x, 0, 0);
         }
     }
 }

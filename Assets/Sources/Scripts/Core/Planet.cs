@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Sources.Scripts.Core
 {
+    public class PlanetCallback : UnityEvent<Planet>
+    {
+    }
+
     public class Planet : MonoBehaviour
     {
         public Renderer myRenderer;
@@ -12,7 +17,9 @@ namespace Sources.Scripts.Core
         public GameObject directionSprite;
         public Transform rocketLaunchPoint;
         public GameObject rocketPrefab;
-
+        public AudioSource rocketLaunchAudioSource;
+        public readonly PlanetCallback OnPlanetDestroyed = new PlanetCallback();
+        
         private float _smallRadius;
         private float _bigRadius;
         private float _currentAngle;
@@ -120,6 +127,8 @@ namespace Sources.Scripts.Core
             {
                 rocket.Init(_planetPreset.rocketDamage, gameObject);
             }
+            
+            rocketLaunchAudioSource.Play();
 
             StartCoroutine(Reload());
         }
@@ -156,6 +165,7 @@ namespace Sources.Scripts.Core
 
         private void DestroyPlanet()
         {
+            OnPlanetDestroyed.Invoke(this);
             Destroy(gameObject);
         }
     }

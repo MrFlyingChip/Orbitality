@@ -10,7 +10,7 @@ namespace Sources.Scripts.Core
         
         public void Init(float myDamage, GameObject source)
         {
-            damage = damage;
+            damage = myDamage;
             rocketSource = source;
         }
 

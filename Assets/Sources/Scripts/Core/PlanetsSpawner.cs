@@ -29,12 +29,18 @@ namespace Sources.Scripts.Core
                 if (planet)
                 {
                     _planets.Add(planet);
+                    planet.OnPlanetDestroyed.AddListener(OnPlanetDestroy);
                 }
             }
 
             return _planets;
         }
 
+        private void OnPlanetDestroy(Planet planet)
+        {
+            _planets.Remove(planet);
+        }
+        
         private Planet CreatePlanet(float smallRadius, float bigRadius)
         {
             GameObject planetGameObject = Instantiate(planetPrefab, transform);

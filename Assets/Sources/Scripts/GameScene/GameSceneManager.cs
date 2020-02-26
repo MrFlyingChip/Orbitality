@@ -21,6 +21,9 @@ namespace Sources.Scripts.GameScene
             GameController.Instance.LaunchGame(planetsSpawner);
             pauseButton.onClick.AddListener(OnPauseButtonClick);
             ShowStartGamePanel(GameController.Instance.StartGame);
+            
+            GameController.Instance.OnGameWin.AddListener(OnWinGame);
+            GameController.Instance.OnGameLose.AddListener(OnLoseGame);
         }
 
         private void ShowStartGamePanel(CallbackVoid onStartPanelHide)
@@ -49,6 +52,18 @@ namespace Sources.Scripts.GameScene
         {
             //save game
             QuitGame();
+        }
+
+        private void OnWinGame()
+        {
+            PauseGame(true);
+            winGamePanel.ShowPanel(QuitGame);
+        }
+
+        private void OnLoseGame()
+        {
+            PauseGame(true);
+            loseGamePanel.ShowPanel(QuitGame);
         }
 
         private void PauseGame(bool pause)

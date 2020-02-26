@@ -1306,6 +1306,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1213941849, guid: a200d8876755fce43ade7f54e96105b0, type: 3}
+      propertyPath: showHPBar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4024343481515263678, guid: a200d8876755fce43ade7f54e96105b0,
         type: 3}
       propertyPath: m_Name
