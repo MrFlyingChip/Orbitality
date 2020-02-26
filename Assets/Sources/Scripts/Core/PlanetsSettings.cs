@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 namespace Sources.Scripts.Core
 {
+    [Serializable]
     public class PlanetPreset
     {
         public float maxHealth;

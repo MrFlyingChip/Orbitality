@@ -36,6 +36,21 @@ namespace Sources.Scripts.Core
             return _planets;
         }
 
+        public List<Planet> SpawnPlanetsFromData(SaveData saveData)
+        {
+            for (int i = 0; i < saveData.planets.Count; i++)
+            {
+                Planet planet = CreatePlanetFromData(saveData.planets[i]);
+                if (planet)
+                {
+                    _planets.Add(planet);
+                    planet.OnPlanetDestroyed.AddListener(OnPlanetDestroy);
+                }
+            }
+
+            return _planets;
+        }
+
         private void OnPlanetDestroy(Planet planet)
         {
             _planets.Remove(planet);
@@ -51,8 +66,27 @@ namespace Sources.Scripts.Core
                 float movingSpeed = Random.Range(minPlanetMovingSpeed, maxPlanetMovingSpeed);
                 float rotationSpeed = Random.Range(minPlanetRotationSpeed, maxPlanetRotationSpeed);
                 float startAngle = Random.Range(0, Mathf.PI * 2);
-                Material material = materialsForPlanets[Random.Range(0, materialsForPlanets.Count)];
-                planet.Init(smallRadius, bigRadius, scale, startAngle, rotationSpeed, movingSpeed, material, showHPBar);
+                int materialIndex = Random.Range(0, materialsForPlanets.Count);
+                Material material = materialsForPlanets[materialIndex];
+                planet.Init(smallRadius, bigRadius, scale, startAngle, rotationSpeed, movingSpeed, material, materialIndex, showHPBar);
+                return planet;
+            }
+
+            return null;
+        }
+        
+        private Planet CreatePlanetFromData(PlanetData planetData)
+        {
+            GameObject planetGameObject = Instantiate(planetPrefab, transform);
+            Planet planet = planetGameObject.GetComponent<Planet>();
+            if (planet)
+            {
+                float scale = planetData.scale;
+                float movingSpeed = planetData.changeAngleSpeed;
+                float rotationSpeed = planetData.rotationSpeed;
+                float startAngle = planetData.currentAngle;
+                Material material = materialsForPlanets[planetData.materialIndex];
+                planet.Init(planetData.smallRadius, planetData.bigRadius, scale, startAngle, rotationSpeed, movingSpeed, material, planetData.materialIndex, showHPBar);
                 return planet;
             }
 

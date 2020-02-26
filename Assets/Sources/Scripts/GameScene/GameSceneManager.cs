@@ -50,7 +50,7 @@ namespace Sources.Scripts.GameScene
 
         private void SaveAndQuitGame()
         {
-            //save game
+            SaveGameManager.Instance.SaveGame(GameController.Instance.GetLevelSaveData());
             QuitGame();
         }
 

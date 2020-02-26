@@ -7,7 +7,6 @@ namespace Sources.Scripts.Utility
     {
         void Start()
         {
-            SaveGameManager.Instance.Init();
             SceneLoader.Instance.LoadScene("MainMenuScene");
         }
     }

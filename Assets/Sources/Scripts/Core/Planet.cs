@@ -19,12 +19,13 @@ namespace Sources.Scripts.Core
         public GameObject rocketPrefab;
         public AudioSource rocketLaunchAudioSource;
         public readonly PlanetCallback OnPlanetDestroyed = new PlanetCallback();
-        
+
         private float _smallRadius;
         private float _bigRadius;
         private float _currentAngle;
         private float _rotationSpeed;
         private float _changeAngleSpeed;
+        private int _materialIndex;
 
         private bool _moving;
         private bool _isPlayer;
@@ -35,7 +36,7 @@ namespace Sources.Scripts.Core
         private float _currentHealth;
 
         public void Init(float smallRadius, float bigRadius, float scale, float startAngle,
-            float rotationSpeed, float changeAngleSpeed, Material rendererMaterial, bool showHpBar)
+            float rotationSpeed, float changeAngleSpeed, Material rendererMaterial, int materialIndex, bool showHpBar)
         {
             _smallRadius = smallRadius;
             _bigRadius = bigRadius;
@@ -44,6 +45,8 @@ namespace Sources.Scripts.Core
             _rotationSpeed = rotationSpeed;
             _changeAngleSpeed = changeAngleSpeed;
 
+            _materialIndex = materialIndex;
+            
             transform.localScale = new Vector3(scale, scale, scale);
 
             myRenderer.material = rendererMaterial;
@@ -127,7 +130,7 @@ namespace Sources.Scripts.Core
             {
                 rocket.Init(_planetPreset.rocketDamage, gameObject);
             }
-            
+
             rocketLaunchAudioSource.Play();
 
             StartCoroutine(Reload());
@@ -140,7 +143,7 @@ namespace Sources.Scripts.Core
             _reloading = false;
         }
 
-        private float CurrentHealth
+        public float CurrentHealth
         {
             get => _currentHealth;
             set
@@ -167,6 +170,23 @@ namespace Sources.Scripts.Core
         {
             OnPlanetDestroyed.Invoke(this);
             Destroy(gameObject);
+        }
+
+        public PlanetData GetPlanetData()
+        {
+            return new PlanetData
+            {
+                smallRadius = _smallRadius,
+                bigRadius = _bigRadius,
+                currentAngle = _currentAngle,
+                rotationSpeed = _rotationSpeed,
+                changeAngleSpeed = _changeAngleSpeed,
+                isPlayer = IsPlayer,
+                scale = transform.localScale.x,
+                preset = _planetPreset,
+                materialIndex = _materialIndex,
+                currentHealth = CurrentHealth
+            };
         }
     }
 }

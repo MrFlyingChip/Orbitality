@@ -20,6 +20,7 @@ namespace Sources.Scripts.MainMenu
         
         private void Awake()
         {
+            SaveGameManager.Instance.Init();
             mainMenuButton.onClick.AddListener(OnMainMenuButtonClick);
             newGameButton.onClick.AddListener(OnNewGameButtonClick);
             loadGameButton.onClick.AddListener(OnLoadGameButtonClick);
@@ -43,11 +44,13 @@ namespace Sources.Scripts.MainMenu
 
         private void OnLoadGameButtonClick()
         {
+            SaveGameManager.Instance.shouldLoadGameFromSave = true;
             SceneLoader.Instance.LoadScene("GameScene");
         }
 
         private void OnNewGameButtonClick()
         {
+            SaveGameManager.Instance.shouldLoadGameFromSave = false;
             SceneLoader.Instance.LoadScene("GameScene");
         }
 
