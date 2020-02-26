@@ -16,6 +16,8 @@ namespace Sources.Scripts.Core
         
         public float minPlanetMovingSpeed;
         public float maxPlanetMovingSpeed;
+
+        public bool showHPBar;
         
         private readonly List<Planet> _planets = new List<Planet>();
 
@@ -44,7 +46,7 @@ namespace Sources.Scripts.Core
                 float rotationSpeed = Random.Range(minPlanetRotationSpeed, maxPlanetRotationSpeed);
                 float startAngle = Random.Range(0, Mathf.PI * 2);
                 Material material = materialsForPlanets[Random.Range(0, materialsForPlanets.Count)];
-                planet.Init(smallRadius, bigRadius, scale, startAngle, rotationSpeed, movingSpeed, material);
+                planet.Init(smallRadius, bigRadius, scale, startAngle, rotationSpeed, movingSpeed, material, showHPBar);
                 return planet;
             }
 
